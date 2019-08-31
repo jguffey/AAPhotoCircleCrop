@@ -148,7 +148,7 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - Actions
     //- - -
     
-    func selectAction() {
+    @objc func selectAction() {
         
         let newSize = CGSize(width: image.size.width * scrollView.zoomScale, height: image.size.height * scrollView.zoomScale)
         
@@ -176,7 +176,7 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         self.dismiss(animated: true, completion: nil) 
     }
     
-    func cancelAction() {
+    @objc func cancelAction() {
         delegate?.circleCropDidCancel?()
         self.dismiss(animated: true, completion: nil)
     }

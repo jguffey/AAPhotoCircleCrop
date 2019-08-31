@@ -5,6 +5,9 @@
       location = "group:AAPhotoCircleCrop.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../AAPhotoCircleCrop">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
