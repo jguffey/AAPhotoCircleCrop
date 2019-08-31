@@ -34,8 +34,8 @@ class ViewController: UIViewController, AACircleCropViewControllerDelegate {
         circleCropController.imageSize = CGSize(width: 200, height: 200)
         
         // 🌎 use selectTitle and cancelTitle to localize buttons
-        circleCropController.selectTitle = "Scegli" // 🇮🇹
-        circleCropController.cancelTitle = "Annulla" // 🇮🇹
+        circleCropController.selectTitle = "Select"
+        circleCropController.cancelTitle = "Cancel"
         present(circleCropController, animated: true, completion: nil)
     }
 

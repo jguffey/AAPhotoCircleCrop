@@ -103,10 +103,11 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(cutterView)
         
         cutterView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
+        let item = cutterView as Any
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
     }
     
     fileprivate func setupButtons() {
@@ -131,13 +132,16 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         
         // cancelButton constraints
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cutterView.addConstraint(NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: cutterView, attribute: .leadingMargin, multiplier: 1, constant: 20))
-        cutterView.addConstraint(NSLayoutConstraint(item: cancelButton, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
+        let cancelItem = cancelButton as Any
+        let selectItem = selectButton as Any
+        
+        cutterView.addConstraint(NSLayoutConstraint(item: cancelItem, attribute: .leading, relatedBy: .equal, toItem: cutterView, attribute: .leadingMargin, multiplier: 1, constant: 20))
+        cutterView.addConstraint(NSLayoutConstraint(item: cancelItem, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
         
         // selectButton consrtraints
         selectButton.translatesAutoresizingMaskIntoConstraints = false
-        cutterView.addConstraint(NSLayoutConstraint(item: selectButton, attribute: .trailing, relatedBy: .equal, toItem: cutterView, attribute: .trailingMargin, multiplier: 1, constant: -20))
-        cutterView.addConstraint(NSLayoutConstraint(item: selectButton, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
+        cutterView.addConstraint(NSLayoutConstraint(item: selectItem, attribute: .trailing, relatedBy: .equal, toItem: cutterView, attribute: .trailingMargin, multiplier: 1, constant: -20))
+        cutterView.addConstraint(NSLayoutConstraint(item: selectItem, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
     }
     
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -148,7 +152,7 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
     // MARK: - Actions
     //- - -
     
-    func selectAction() {
+    @objc func selectAction() {
         
         let newSize = CGSize(width: image.size.width * scrollView.zoomScale, height: image.size.height * scrollView.zoomScale)
         
@@ -163,7 +167,7 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         image.draw(in: sharpRect)
         let finalImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        if let imageData = UIImagePNGRepresentation(finalImage!), var pngImage = UIImage(data: imageData) {
+        if let imageData = finalImage!.pngData(), var pngImage = UIImage(data: imageData) {
             
             if let imageSize = imageSize {
                 pngImage = pngImage.resizeImage(newWidth: imageSize.width)
@@ -176,7 +180,7 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         self.dismiss(animated: true, completion: nil) 
     }
     
-    func cancelAction() {
+    @objc func cancelAction() {
         delegate?.circleCropDidCancel?()
         self.dismiss(animated: true, completion: nil)
     }
