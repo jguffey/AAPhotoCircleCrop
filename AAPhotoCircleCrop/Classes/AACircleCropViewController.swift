@@ -103,10 +103,11 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(cutterView)
         
         cutterView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: cutterView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
+        let item = cutterView as Any
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: item, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0))
     }
     
     fileprivate func setupButtons() {
@@ -131,13 +132,16 @@ open class AACircleCropViewController: UIViewController, UIScrollViewDelegate {
         
         // cancelButton constraints
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cutterView.addConstraint(NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: cutterView, attribute: .leadingMargin, multiplier: 1, constant: 20))
-        cutterView.addConstraint(NSLayoutConstraint(item: cancelButton, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
+        let cancelItem = cancelButton as Any
+        let selectItem = selectButton as Any
+        
+        cutterView.addConstraint(NSLayoutConstraint(item: cancelItem, attribute: .leading, relatedBy: .equal, toItem: cutterView, attribute: .leadingMargin, multiplier: 1, constant: 20))
+        cutterView.addConstraint(NSLayoutConstraint(item: cancelItem, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
         
         // selectButton consrtraints
         selectButton.translatesAutoresizingMaskIntoConstraints = false
-        cutterView.addConstraint(NSLayoutConstraint(item: selectButton, attribute: .trailing, relatedBy: .equal, toItem: cutterView, attribute: .trailingMargin, multiplier: 1, constant: -20))
-        cutterView.addConstraint(NSLayoutConstraint(item: selectButton, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
+        cutterView.addConstraint(NSLayoutConstraint(item: selectItem, attribute: .trailing, relatedBy: .equal, toItem: cutterView, attribute: .trailingMargin, multiplier: 1, constant: -20))
+        cutterView.addConstraint(NSLayoutConstraint(item: selectItem, attribute: .bottomMargin, relatedBy: .equal, toItem: cutterView, attribute: .bottomMargin, multiplier: 1, constant: -32))
     }
     
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
